@@ -1,0 +1,8 @@
+.PopOver {
+	padding: 10px 0;
+	width: 20cm;
+	margin: 10px auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+}

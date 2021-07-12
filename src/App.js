@@ -3,7 +3,7 @@ import Button from "./Components/Button/Button";
 import Input from "./Components/Input/Input";
 import PuzzleBox from "./Components/Box/Box";
 import Title from "./Components/Title/Title";
-import Message from "./Components/Error/Error";
+import { Error, PopOver } from "./Components/Message/Message";
 import classes from "./App.module.css";
 
 function App() {
@@ -12,8 +12,8 @@ function App() {
 	const [dragId, setDragId] = useState();
 	const [dropId, setDropId] = useState();
 	const [message, setMessage] = useState(null);
+	const [popOver, setPopOver] = useState(false);
 	var boxes = [];
-	var bgColor = "white";
 
 	const Box = {
 		display: "grid",
@@ -34,13 +34,17 @@ function App() {
 	const submit = () => {
 		if (input === "") {
 			setMessage("Enter Inter value please");
-			setTimeout(() => setMessage(null));
+			setTimeout(() => {
+				setMessage(null);
+			}, 1500);
 		}
-		var randomNumber = 0;
+
+		let randomNumber = 0;
 		let arr = [];
 		for (let i = 1; i <= input * input; i++) {
 			arr.push(i);
 		}
+
 		console.log(arr);
 		let i = arr.length;
 		console.log(i);
@@ -91,8 +95,6 @@ function App() {
 
 	const drop = (e, value) => {
 		e.preventDefault();
-		bgColor = "green";
-		console.log("Drop Box", bgColor);
 
 		const dragIndex = (element) => element === dragId;
 		const dropIndex = (element) => element === dropId;
@@ -126,51 +128,42 @@ function App() {
 		// 	}
 		// 	return box;
 		// });
+
 		setBox([...box]);
 		console.log(box);
+		setPopOver(true);
+		setTimeout(() => {
+			setPopOver(false);
+		}, 1000);
 	};
 
 	const DragOver = (e, value) => {
 		e.preventDefault();
-		bgColor = "red";
 		setDropId(value);
 		// e.stopPropagation();
 	};
 
-	const dragStart = (e, value) => {
-		bgColor = "red";
+	const dragStart = (value) => {
 		setDragId(value);
 	};
 
 	return (
 		<div className={classes.Puzzle}>
 			<Title title="Puzzle Box" />
-			{message && <Message>{message}</Message>}
+			{popOver ? <PopOver /> : false}
+			{message ? <Error>{message}</Error> : null}
 			<div className={classes.upperBox}>
 				<Input type="number" input={input} onChange={changeHandler} />
 				<Button type="submit" onClick={submit} />
 			</div>
 			<div style={Box}>
 				{box.map((value) => (
-					// <div
-					// 	style={{ backgroundColor: bgColor }}
-					// 	draggable={true}
-					// 	onDrop={(e) => drop(e, value)}
-					// 	onDragStart={(e) => dragStart(e, value)}
-					// 	onDragOver={(e) => DragOver(e, value)}
-					// 	className={classes.Boxes}
-					// 	key={value}
-					// 	id={value}
-					// >
-					// 	{value}
-					// </div>
 					<PuzzleBox
 						key={value}
 						drop={(e) => drop(e, value)}
-						dragStart={(e) => dragStart(e, value)}
+						dragStart={(e) => dragStart(value)}
 						dragOver={(e) => DragOver(e, value)}
 						id={value}
-						bgColor={bgColor}
 					>
 						{value}
 					</PuzzleBox>
