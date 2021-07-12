@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import Button from "./Components/Button/Button";
 import Input from "./Components/Input/Input";
 import PuzzleBox from "./Components/Box/Box";
-import classes from "./App.module.css";
 import Title from "./Components/Title/Title";
+import Message from "./Components/Error/Error";
+import classes from "./App.module.css";
 
 function App() {
 	const [input, setInput] = useState("");
 	const [box, setBox] = useState([]);
 	const [dragId, setDragId] = useState();
 	const [dropId, setDropId] = useState();
+	const [message, setMessage] = useState(null);
 	var boxes = [];
-	var bgColor = "#eaeaea";
+	var bgColor = "white";
 
 	const Box = {
 		display: "grid",
@@ -31,7 +33,8 @@ function App() {
 
 	const submit = () => {
 		if (input === "") {
-			alert("Please fill input field");
+			setMessage("Enter Inter value please");
+			setTimeout(() => setMessage(null));
 		}
 		var randomNumber = 0;
 		let arr = [];
@@ -142,6 +145,7 @@ function App() {
 	return (
 		<div className={classes.Puzzle}>
 			<Title title="Puzzle Box" />
+			{message && <Message>{message}</Message>}
 			<div className={classes.upperBox}>
 				<Input type="number" input={input} onChange={changeHandler} />
 				<Button type="submit" onClick={submit} />
