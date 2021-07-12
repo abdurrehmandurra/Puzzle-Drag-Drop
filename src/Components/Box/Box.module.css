@@ -1,0 +1,13 @@
+.Boxes {
+	background-color: white;
+	height: 150px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 5px;
+	border: 1px solid #ced4da;
+}
+.Boxes:hover {
+	box-shadow: 0 0 5px 1px lightgray;
+	cursor: pointer;
+}
