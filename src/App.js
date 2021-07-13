@@ -58,40 +58,6 @@ function App() {
 		setInput("");
 	};
 
-	//arrayMove.js
-	// const arrayMoveMutate = (array, from, to) => {
-	// 	array.splice(to < 0 ? array.length + to : to, 0, array.splice(from, 1)[0]);
-	// };
-
-	// const arrayMove = (array, from, to) => {
-	// 	array = array.slice();
-	// 	arrayMoveMutate(array, from, to);
-	// 	return array;
-	// };
-
-	// const SortEnd = ({ oldIndex, newIndex }) => {
-	// this.setState(({ items }) => ({
-	// 	items: arrayMove(items, oldIndex, newIndex),
-	// }));
-
-	// 	setBox(arrayMove(box, oldIndex, newIndex));
-	// };
-
-	// const dragEnd = (result) => {
-	// 	if (!result.destination) {
-	// 		return;
-	// 	}
-	// 	const content = reorder(content, result.source.index, result.destination.index);
-	// 	this.setState({ content });
-	// };
-
-	// const reorder = (list, startIndex, endIndex) => {
-	// 	const result = Array.from(list);
-	// 	const [removed] = result.splice(startIndex, 1);
-	// 	result.splice(endIndex, 0, removed);
-	// 	return result;
-	// };
-
 	const drop = (e) => {
 		e.preventDefault();
 
@@ -137,7 +103,9 @@ function App() {
 		// console.log("Sort : " + sortArray);
 
 		if (JSON.stringify(box) === JSON.stringify(sortArray)) {
-			setPopOver(true);
+			setTimeout(() => {
+				setPopOver(true);
+			}, 500);
 		}
 	};
 
@@ -157,7 +125,7 @@ function App() {
 	return (
 		<div className={classes.Puzzle}>
 			<Title title="Puzzle Box" />
-			{popOver ? <PopOver closeMsg={closeMessage} /> : false}
+			{popOver ? <PopOver close={closeMessage} closeMsg={closeMessage} /> : false}
 			{message ? <Error>{message}</Error> : null}
 			<div className={classes.upperBox}>
 				<Input type="number" input={input} onChange={changeHandler} />

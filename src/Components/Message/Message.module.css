@@ -11,6 +11,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 10;
 }
 .PopOver strong {
 	font-weight: 400;
@@ -18,12 +19,15 @@
 	color: black;
 }
 .PopOver button {
-	border: 1px solid #bcc1c5;
+	/* border: 1px solid #bcc1c5; */
 	position: absolute;
 	right: 20px;
 	top: 10px;
-	font-size: 30px;
+}
+.PopOver button:focus {
+	outline: none;
+}
+.PopOver button span {
+	font-size: 50px;
 	font-weight: 300;
-	padding: 5px 20px;
-	border-radius: 5px;
 }
