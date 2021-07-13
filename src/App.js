@@ -47,7 +47,6 @@ function App() {
 
 		console.log(arr);
 		let i = arr.length;
-		console.log(i);
 		while (i--) {
 			randomNumber = Math.floor(Math.random() * (i + 1));
 			boxes.push(arr[randomNumber]);
@@ -93,7 +92,7 @@ function App() {
 	// 	return result;
 	// };
 
-	const drop = (e, value) => {
+	const drop = (e) => {
 		e.preventDefault();
 
 		const dragIndex = (element) => element === dragId;
@@ -103,8 +102,8 @@ function App() {
 
 		[box[drag], box[drop]] = [box[drop], box[drag]];
 
-		console.log(" Drag index " + drag);
-		console.log(" Drop Index " + drop);
+		// console.log(" Drag index " + drag);
+		// console.log(" Drop Index " + drop);
 		// console.log(boxes);
 		// console.log(box);
 
@@ -130,27 +129,35 @@ function App() {
 		// });
 
 		setBox([...box]);
-		console.log(box);
-		setPopOver(true);
-		setTimeout(() => {
-			setPopOver(false);
-		}, 1000);
+
+		let sortArray = [...box];
+		sortArray.sort((a, b) => a - b);
+
+		// console.log("Box : " + box);
+		// console.log("Sort : " + sortArray);
+
+		if (JSON.stringify(box) === JSON.stringify(sortArray)) {
+			setPopOver(true);
+		}
 	};
 
-	const DragOver = (e, value) => {
+	const dragOver = (e, value) => {
 		e.preventDefault();
 		setDropId(value);
-		// e.stopPropagation();
 	};
 
 	const dragStart = (value) => {
 		setDragId(value);
 	};
 
+	const closeMessage = () => {
+		setPopOver(false);
+	};
+
 	return (
 		<div className={classes.Puzzle}>
 			<Title title="Puzzle Box" />
-			{popOver ? <PopOver /> : false}
+			{popOver ? <PopOver closeMsg={closeMessage} /> : false}
 			{message ? <Error>{message}</Error> : null}
 			<div className={classes.upperBox}>
 				<Input type="number" input={input} onChange={changeHandler} />
@@ -160,9 +167,9 @@ function App() {
 				{box.map((value) => (
 					<PuzzleBox
 						key={value}
-						drop={(e) => drop(e, value)}
+						drop={drop}
 						dragStart={(e) => dragStart(value)}
-						dragOver={(e) => DragOver(e, value)}
+						dragOver={(e) => dragOver(e, value)}
 						id={value}
 					>
 						{value}

@@ -5,4 +5,25 @@
 	position: absolute;
 	left: 0;
 	right: 0;
+	height: 10cm;
+	background-color: white;
+	border: 1px solid #ced4da;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.PopOver strong {
+	font-weight: 400;
+	font-size: 30px;
+	color: black;
+}
+.PopOver button {
+	border: 1px solid #bcc1c5;
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	font-size: 30px;
+	font-weight: 300;
+	padding: 5px 20px;
+	border-radius: 5px;
 }
